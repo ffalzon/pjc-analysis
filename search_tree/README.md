@@ -5,6 +5,11 @@
 These experiments assume prior installation of Python 3 via the python3 command. First clone the repository. This code
 requires installing the tqdm library, the details of which can be found in requirements.txt.
 
+Before running the code, create the directory in which the results will be stored:
+```
+mkdir results
+```
+
 To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository.
 
 ```
