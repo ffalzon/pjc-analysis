@@ -17,17 +17,20 @@ methods). However the evaluation is performed using Gurobi.
 Tested under `python 3.10.15`.
 
 1. Install `virtualenv`
+
    If you don't have `virtualenv` installed, you can install it with the
    following command:
    
    `pip install virtualenv`
 
 2. Create a virtual environment
+
    To create a new virtual environment, run:
    
    `virtualenv myenv`
 
 3. Activate the virtual environment
+
    *Windows*: `myenv\Scripts\activate`
    
    *macOS/Linux*: `source myenv/bin/activate`
