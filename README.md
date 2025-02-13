@@ -79,7 +79,7 @@ set of parameters for 1 run per parameter setting.
 fourier) and `generated_params_sparse.json` (for maximum likelihood estimation).
 You can edit the `gen_parameters.py` to generate different parameters for experiments.
 
-2. Open the `experiment` folder and run `python3 experiment.py`, it will output a `results` folder that contains a list of csv files reporting the results.
+2. Open the `experiment` folder and run `python3 experiment.py <params_non_sparse.json> <params_sparse.json>`, it will output a `results` folder that contains a list of csv files reporting the results.
 You can edit the list of recover methods (with and without noise) that you would like to use in the main function of the  `experiment.py` file.
 
 When you're done, you can deactivate the environment with: `deactivate`
