@@ -50,7 +50,7 @@ Before running the benchmark code, create the directory in which the results wil
 
 `mkdir results`
 
-To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository.
+To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository:
 
 `python3 benchmark.py NUM-RUNS PARAMS`
 
