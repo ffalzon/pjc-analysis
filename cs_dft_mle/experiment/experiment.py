@@ -166,60 +166,67 @@ class Experiment:
         l1_loss = self.compute_solution_loss(sols)
         return l1_loss, recovery_time
 
-if __name__ == "__main__":
-    # Choose the recovery type: 
-    # recovery_type = "compressed_sensing_l1"
-    # recovery_type = "compressed_sensing_l2"
-    # recovery_type = "discrete_fourier"
-    # recovery_type = "mle"
-    # recovery_type = "lasso"
+import sys
 
-    use_noise_l = [True]
-    use_ortools = True # Need to set to false to use Gurobi
-    num_experiments = 5 # default 10, 5 is for testing
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: experiment.py <non_sparse_params_path> <sparse_params_path> [--exclude]")
+        sys.exit(1)
+
+    non_sparse_params_path = sys.argv[1]
+    sparse_params_path = sys.argv[2]
+    exclude_cs_l2 = '--exclude' in sys.argv
+
+    use_noise_l = [False, True]
+    use_ortools = False  # Set to False to use Gurobi
+    num_experiments = 1  # For testing
 
     for use_noise in use_noise_l:
-        if use_noise:
-            recovery_type_l = ["discrete_fourier", "compressed_sensing_l2"]
-        else:
-            recovery_type_l = ["mle", "discrete_fourier", "compressed_sensing_l1", "compressed_sensing_l2"]
+        recovery_type_l = ["mle", "discrete_fourier", "compressed_sensing_l1", "compressed_sensing_l2"]
+
+        if exclude_cs_l2 and use_noise == True:
+            recovery_type_l.remove("compressed_sensing_l2")
 
         for recovery_type in recovery_type_l:
-            if recovery_type == "mle":
-                params_list = Parameters.load_multiple(f"../config/generated_params_non_sparse.json")
-            else:
-                params_list = Parameters.load_multiple('../config/generated_params_sparse.json')
-            
+            try:
+                params_list = (Parameters.load_multiple(non_sparse_params_path)
+                               if recovery_type == "mle"
+                               else Parameters.load_multiple(sparse_params_path))
+            except Exception as e:
+                print(f"Error loading parameters: {e}")
+                continue
+
             for params in params_list:
                 print(params)
-                # Write results to CSV
                 field_names = ["min_val_Y", "max_val_Y", "num_targets", "intersection_ratio", "intersection_size", "num_invocations", "mean_val_Y", "scale_val_Y", 
-                                "min_val_X", "max_val_X", "mean_val_X", "scale_val_X", "noise_loc", "noise_magnitude", "noise_scale", "recovery_type", "num_experiments", "avg_l1_loss", "avg_recovery_time"]        
+                               "min_val_X", "max_val_X", "mean_val_X", "scale_val_X", "noise_loc", "noise_magnitude", "noise_scale", "recovery_type", "num_experiments", "avg_l1_loss", "avg_recovery_time"]
                 
                 print(f"Is valid: {params.is_valid()}")
 
-                l1_loss_total = 0
-                recovery_time_total = 0
+                l1_loss_total, recovery_time_total = 0, 0
 
                 for _ in tqdm.tqdm(range(num_experiments)):
-                    experiment = Experiment(params, recovery_type, use_noise, use_ortools)
-                    l1_loss, recovery_time = experiment.run()
-                    l1_loss_total += l1_loss
-                    recovery_time_total += recovery_time
+                    try:
+                        experiment = Experiment(params, recovery_type, use_noise, use_ortools)
+                        l1_loss, recovery_time = experiment.run()
+                        l1_loss_total += l1_loss
+                        recovery_time_total += recovery_time
+                    except Exception as e:
+                        print(f"Experiment error: {e}")
+                        continue
 
-                avg_recovery_time = round(recovery_time_total / num_experiments) # in ns
-                avg_l1_loss = round(l1_loss_total / num_experiments, 2) # round to precision 2
+                avg_recovery_time = round(recovery_time_total / num_experiments)
+                avg_l1_loss = round(l1_loss_total / num_experiments, 2)
                 
                 results = [[params.min_val_Y, params.max_val_Y, params.num_targets, params.intersection_ratio, params.intersection_size, params.num_invocations, params.mean_val_Y, params.scale_val_Y,
-                        params.min_val_X, params.max_val_X, params.mean_val_X, params.scale_val_X, params.noise_loc, params.noise_magnitude, params.noise_scale,recovery_type, 
-                        num_experiments, avg_l1_loss, avg_recovery_time]]
-          
+                            params.min_val_X, params.max_val_X, params.mean_val_X, params.scale_val_X, params.noise_loc, params.noise_magnitude, params.noise_scale, recovery_type, 
+                            num_experiments, avg_l1_loss, avg_recovery_time]]
+
                 result_dir = "results"
-                if not os.path.exists(result_dir):
-                    os.makedirs(result_dir)
-                if use_noise:
-                    result_file_name = f"{result_dir}/results_{recovery_type}_noise.csv"
-                else:
-                    result_file_name = f"{result_dir}/results_{recovery_type}.csv"
-                    
-                Util.write_results_to_csv(result_file_name, field_names, results)
+                os.makedirs(result_dir, exist_ok=True)
+                result_file_name = f"{result_dir}/results_{recovery_type}{'_noise' if use_noise else ''}.csv"
+                
+                try:
+                    Util.write_results_to_csv(result_file_name, field_names, results)
+                except Exception as e:
+                    print(f"Error writing results: {e}")

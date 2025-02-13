@@ -1,0 +1,19 @@
+{
+    "param_sets": [
+        {
+            "min_val_Y": -100,
+            "max_val_Y": 100,
+            "scale_val_Y": 500,
+            "num_targets": 100,
+            "num_invocations": 95,
+            "mean_val_Y": 0.0,
+            "min_val_X": -100,
+            "max_val_X": 100,
+            "mean_val_X": 0.0,
+            "scale_val_X": 50,
+            "noise_loc": 0,
+            "noise_scale": 0.25,
+            "noise_magnitude": 10
+        }
+    ]
+}

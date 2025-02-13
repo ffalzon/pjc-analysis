@@ -87,17 +87,17 @@ if __name__ == "__main__":
     num_invocations_ratio_l = [0.95]
 
     # Define ranges and steps for parameter values
-    min_val_Y_l = [-1000]
-    max_val_Y_l = [1000]
+    min_val_Y_l = [-100]
+    max_val_Y_l = [100]
     scale_val_Y_l = [500]
     
     min_val_X_l = [-100]
     max_val_X_l = [100]
     scale_val_X_l = [50]
 
-    noise_magnitude_l = [100]
+    noise_magnitude_l = [10]
     noise_loc_l = [0]
-    noise_scale_l = [5] 
+    noise_scale_l = [0.25] 
 
     cs_l1_multi_factor_l = [2]
     cs_l2_multi_factor_l = [2]

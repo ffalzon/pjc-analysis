@@ -47,7 +47,7 @@ def process_dataframe(df):
 
 def generate_latex_table_from_dataframe(df, output_tex, label_min_val_Y, label_max_val_Y, use_noise):
     latex_code = r"""
-\begin{table}[h!]
+\begin{table}[t]
     \begin{tabular}{c|r|r|r|r|r}
     \toprule
     $n$ & $k$ & Type & $q$ & $\ell_1$ loss & Time (ms) \\
@@ -121,7 +121,7 @@ def generate_latex_table_from_dataframe(df, output_tex, label_min_val_Y, label_m
             noise_std = 5
         else:
             raise ValueError("Invalid max_val_Y value.")
-        table_caption = f"Value range $[{label_min_val_Y}, {label_max_val_Y}]$, with noise from $\\calN(\\mu=0, \\sigma={noise_std})$, clipped at magnitude ${noise_magnitude}$."
+        table_caption = f"Value range $[{label_min_val_Y}, {label_max_val_Y}]$, with noise from $\\mathcal{{N}}(\\mu=0, \\sigma={noise_std})$, clipped at magnitude ${noise_magnitude}$."
     else:
         text_label_noise = 'noiseless'
         table_caption = f"Value range $[{label_min_val_Y}, {label_max_val_Y}]$."
@@ -135,6 +135,24 @@ def generate_latex_table_from_dataframe(df, output_tex, label_min_val_Y, label_m
     with open(output_tex, 'w') as f:
         f.write(latex_code)
 
+def merge_to_csv(noise, max_val_Y):
+    # Set the directory containing the CSV files
+    directory = "./results"
+
+    # List all CSV files in the directory
+    if noise == 'noisy':
+        csv_files = [file for file in os.listdir(directory) if file.endswith(f'_noise.csv')]
+    else:
+        csv_files = [file for file in os.listdir(directory) if not file.endswith(f'_noise.csv')]
+
+    # Merge all CSV files
+    merged_df = pd.concat([pd.read_csv(os.path.join(directory, file)) for file in csv_files], ignore_index=True)
+
+    # Save the merged DataFrame to a new CSV file
+    merged_csv_str = f"results_table_{noise}_{max_val_Y}.csv"
+    merged_df.to_csv(merged_csv_str, index=False)
+    print(f"All CSV files have been merged into {merged_csv_str}.")
+        
 def generate_latex_table_from_csv(input_csv, output_tex):
     parts = input_csv.split('_')
     use_noise = False
@@ -147,10 +165,21 @@ def generate_latex_table_from_csv(input_csv, output_tex):
     processed_df = process_dataframe(df)
 
     generate_latex_table_from_dataframe(processed_df, output_tex, label_min_val_Y, label_max_val_Y, use_noise)
+    
+import sys
 
 if __name__ == "__main__":
-    max_val_Y_list = [100, 1000]
+    if len(sys.argv) != 2 or sys.argv[1] not in ['100', '1000']:
+        print("Usage: gen_tex_table.py <100 or 1000>")
+        sys.exit(1)
+
+    max_val_Y = int(sys.argv[1])
     noise_list = ['noisy', 'noiseless']
-    for max_val_Y in max_val_Y_list:
-        for noise in noise_list:
-            generate_latex_table_from_csv(f'./results_table_{noise}_{max_val_Y}.csv', f'./stats_table_{noise}_{max_val_Y}.tex')
+
+    for noise in noise_list:
+        merge_to_csv(noise, max_val_Y)
+        generate_latex_table_from_csv(
+            f'./results_table_{noise}_{max_val_Y}.csv', 
+            f'./stats_table_{noise}_{max_val_Y}.tex'
+        )
+        print(f"Table is generated in ./stats_table_{noise}_{max_val_Y}.tex.")
