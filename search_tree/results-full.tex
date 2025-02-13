@@ -1,0 +1,285 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17} % ensure compatibility
+\usepgfplotslibrary{groupplots}
+\usepgfplotslibrary{colorbrewer}
+\pgfplotsset{cycle list/Set2} 
+
+
+\title{Search Tree Plots}
+
+\begin{document}
+
+\maketitle
+
+\section{Graphs}
+
+\begin{figure}[h!]
+\begin{tikzpicture}
+    \begin{groupplot}[
+      group style={
+        group size=4 by 1, % 4 columns, 1 rows
+        horizontal sep=1cm, % horizontal separation
+        vertical sep=1.4cm,   % vertical separation
+      },
+      width=4.5cm,
+      height=3.8cm,
+    ]
+    \nextgroupplot[
+        grid=major,
+        title={$|T|=10^3$},
+        ylabel={\# Queries}
+    ]
+      \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-1.0-1000-results.csv};
+        \label{plot:2-1}
+       \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-2.0-1000-results.csv};
+        \label{plot:2-2}
+      \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-4.0-1000-results.csv};
+        \label{plot:2-4}
+      \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-6.0-1000-results.csv};
+        \label{plot:2-6}
+      \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-8.0-1000-results.csv};
+        \label{plot:2-8}
+      \addplot+[line width=1.5pt, mark=none] 
+        table[y=avg_num_queries, x=sparsity, col sep=comma]
+        {results/tree-10.0-1000-results.csv};
+        \label{plot:2-10}
+      %
+      %
+    \hspace{-5mm}
+    \nextgroupplot[
+      grid=major,
+      title={$|T|=10^4$},
+    ]
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-1.0-10000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-2.0-10000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-4.0-10000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-6.0-10000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-8.0-10000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-10.0-10000-results.csv};
+    %
+    %
+    \nextgroupplot[
+      %ymode=log, log basis y=10,
+      grid=major,
+      title={$|T|=10^5$},
+      %xlabel={$\rho$},
+      ylabel={\# Queries}
+    ]
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-1.0-100000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-2.0-100000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-4.0-100000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-6.0-100000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-8.0-100000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-10.0-100000-results.csv};
+    %
+    %
+    \nextgroupplot[
+      xtick={0, 0.05, 0.1},
+      xticklabels={0, 0.05, 0.1},
+      grid=major,
+      title={$|T|=10^6$},
+    ]
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-1.0-1000000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-2.0-1000000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-4.0-1000000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-6.0-1000000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-8.0-1000000-results.csv};
+        \addplot+[line width=1.5pt, mark=none] 
+          table[y=avg_num_queries, x=sparsity, col sep=comma]
+          {results/tree-10.0-1000000-results.csv};
+        \end{groupplot}
+  \end{tikzpicture}
+  \caption{The number of queries required by our Search Tree Attack,
+  plotted against intersection ratio $\rho$ for partition size $\ell$ 
+  of $2^1$ (\ref{plot:2-1}), $2^2$ (\ref{plot:2-2}), $2^4$ (\ref{plot:2-4}),
+  $2^6$ (\ref{plot:2-6}), $2^8$ (\ref{plot:2-8}), and $2^{10}$ (\ref{plot:2-10}).
+  \label{fig:rand-data-active}}
+  \vspace{-2mm}
+\end{figure}
+
+
+\begin{figure*}[h!]  
+    \begin{tikzpicture}
+        \begin{groupplot}[
+          group style={
+            group size=4 by 2, % 4 columns, 2 rows
+            horizontal sep=1.4cm, % horizontal separation
+            vertical sep=1.3cm,   % vertical separation
+          },
+          width=4.3cm,
+        height=3.8cm,
+          legend style={
+            at={(2.5,-2.4)}, 
+            anchor=south, 
+            legend columns=-1,
+            draw=black,
+          },
+          ]
+        \nextgroupplot[
+            title={$|T|=10^3$},
+            ylabel={Time (ms)},
+            grid=major,
+            /pgf/number format/.cd,
+            1000 sep={\,},
+        ]
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-1.0-1000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-2.0-1000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-4.0-1000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-6.0-1000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-8.0-1000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000, x=sparsity, col sep=comma]
+                {results/tree-10.0-1000-results.csv};
+        %
+        %
+        \nextgroupplot[
+            title={$|T|=10^4$},
+            ylabel={Time (s)},
+            grid=major,
+            /pgf/number format/.cd,
+            1000 sep={\,},
+        ]
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-1.0-10000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-2.0-10000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-4.0-10000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-6.0-10000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-8.0-10000-results.csv};
+            \addplot+[line width=1.5pt, mark=none] 
+                table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                {results/tree-10.0-10000-results.csv};
+          %
+          %
+            \nextgroupplot[
+            title={$|T|=10^5$},
+              ylabel={Time (s)},
+              grid=major,
+              /pgf/number format/.cd,
+              1000 sep={\,},
+          ]
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-1.0-100000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-2.0-100000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-4.0-100000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-6.0-100000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-8.0-100000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-10.0-100000-results.csv};
+        %
+        %
+        \nextgroupplot[
+            title={$|T|=10^6$},
+              xtick={0, 0.05, 0.1},
+              xticklabels={0, 0.05, 0.1},
+              ylabel={Time (s)},
+              grid=major,
+              /pgf/number format/.cd,
+              1000 sep={\,},
+          ]
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-1.0-1000000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-2.0-1000000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-4.0-1000000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-6.0-1000000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-8.0-1000000-results.csv};
+              \addplot+[line width=1.5pt, mark=none] 
+                  table[y expr=\thisrow{avg_time}/1000000000, x=sparsity, col sep=comma]
+                  {results/tree-10.0-1000000-results.csv};
+                \end{groupplot}
+      \end{tikzpicture}
+        
+    \caption{The time required by our Search Tree Attack,
+    plotted against the intersection ratio $\rho$ for partition size $\ell$ 
+    of $2^1$ (\ref{plot:2-1}), $2^2$ (\ref{plot:2-2}), $2^4$ (\ref{plot:2-4}),
+    $2^6$ (\ref{plot:2-6}), $2^8$ (\ref{plot:2-8}), and $2^{10}$ (\ref{plot:2-10}).
+    \label{fig:rand-time-active}}
+  \end{figure*}
+
+
+\end{document}
