@@ -44,7 +44,7 @@ Tested under `python 3.10.15`.
 To run a simple functionality test for the search tree attack, run the following
 command from the top level directory:
 
-`python3 search_tree/test.py`
+`python3 test.py`
 
 Before running the benchmark code, create the directory in which the results will be stored:
 
