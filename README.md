@@ -41,7 +41,7 @@ Tested under `python 3.10.15`.
 
 ## Work in the `search_tree` directory
 
-To run a simple functionality test for the search tree attack, run the following
+**Preparation:** To run a simple functionality test for the search tree attack, run the following
 command from the top level directory:
 
 `python3 test.py`
@@ -50,7 +50,7 @@ Before running the benchmark code, create the directory in which the results wil
 
 `mkdir results`
 
-To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository:
+**Execution:** To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository:
 
 `python3 benchmark.py NUM-RUNS PARAMS`
 
@@ -66,6 +66,11 @@ For example, the command
 
 specifies running the benchmarks for the abbreciated
 set of parameters for 1 run per parameter setting.
+
+**Results:**  To reproduce the graphs, first navigate to `results-part.tex` (if running the abbreviated 
+    parameter selection) or `results-full.tex` (if running the full parameter selection) 
+    and compile the LaTeX document. These documents pull the data from `results`
+    and print the graphs depicted in Figures 3 and 7 of the paper.
 
 ## Work in the `cs_dft_mle` directory
 
