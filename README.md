@@ -41,27 +41,31 @@ Tested under `python 3.10.15`.
 
 ## Work in the `search_tree` directory
 
-Before running the code, create the directory in which the results will be stored:
+To run a simple functionality test for the search tree attack, run the following
+command from the top level directory:
+
+`python3 search_tree/test.py`
+
+Before running the benchmark code, create the directory in which the results will be stored:
 
 `mkdir results`
 
 To run the experiments for the search tree attack, run the following commmand from the `search_tree` directory of the repository.
 
-`python3 benchmark.py ATTACK MAX_VAL SECRET_SET_SIZE NUM-RUNS`
+`python3 benchmark.py NUM-RUNS PARAMS`
 
-where
-`ATTACK` specifies either the `basic` attack or the `tree` attack,
-`MAX_VAL` (int) specifies the maximum possible value of the secret set,
-`SECRET_SET_SIZE` (int) specifies the size of the victim's set, Y, and
-`NUM-RUNS` (int) specifies the number of times you wish to repeat the attack for any set of parameters.
+where 
+`NUM-RUNS` (int) denotes how many times to run the attack for each parameter setting and 
+`PARAMS` (str) that takes on the value of `part` (which runs an abbreviatedset of parameters 
+and which can run in <1hr on a commercial laptop) or `full` 
+(which runs the full set of parameters reported in our paper). 
 
-An example of the command is below:
+For example, the command
 
-`python3 benchmark.py tree 100 1000 10`
+`python3 benchmark.py 1 part`
 
-The results are printed out to csv files contained in the `/results` directory. 
-For the basic attack, the results are output to a file named `basic-SECRET_SET_SIZE-results.csv` and
-for the search-tree attack, the results are output to `tree-LOG_OF_ARITY-SECRET_SET_SIZE-results.csv`.
+specifies running the benchmarks for the abbreciated
+set of parameters for 1 run per parameter setting.
 
 ## Work in the `cs_dft_mle` directory
 
